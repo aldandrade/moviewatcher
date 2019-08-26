@@ -1,0 +1,5 @@
+com\movie\watcher\service\MovieService.class
+com\movie\watcher\WatcherApplication.class
+com\movie\watcher\model\Movie.class
+com\movie\watcher\controller\MovieController.class
+com\movie\watcher\persistence\MovieDAO.class
