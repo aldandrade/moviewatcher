@@ -27,8 +27,4 @@ public class UserController {
 
         return userService.getAllUsers();
     }
-    /*
-    @RequestMapping("/search/{movieTitle}")
-    public String getMovies(@PathVariable String movieTitle) { return movieService.getMovies(movieTitle); }
-*/
 }

@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+    @NotBlank
     private String imdbID; //imdbID that came from the OMDB API
     @NotBlank
     private String Title;
@@ -20,13 +21,14 @@ public class Movie {
     private String Poster;
     @OneToMany(mappedBy = "movieId", cascade = CascadeType.ALL)
     private Set<User> users;
+    private boolean isFavorite;
 
 
 
     public Movie() {
     }
 
-    public Movie(Integer id,String imdbID, String Title,String Year , String type, String posterLink, User users) {
+    public Movie(Long id, String imdbID, String Title, String Year, String type, String posterLink, User users) {
         super();
         this.id = id;
         this.imdbID = imdbID;
@@ -37,11 +39,11 @@ public class Movie {
         this.users = Stream.of(users).collect(Collectors.toSet());
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -85,6 +87,12 @@ public class Movie {
         this.Poster = posterLink;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
 
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 }
 

@@ -4,17 +4,23 @@ import com.movie.watcher.model.Movie;
 import com.movie.watcher.persistence.MovieDAO;
 import com.movie.watcher.service.OmdbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Component
+@Service("MovieController")
 public class MovieController {
-    @Autowired
-    private MovieDAO movieDAO;
 
-    private OmdbService omdbService;
+    private final MovieDAO movieDAO;
+    private final OmdbService omdbService;
+
+    @Autowired
+    public MovieController(MovieDAO movieDAO, OmdbService omdbService) {
+        this.movieDAO = movieDAO;
+        this.omdbService = omdbService;
+    }
 
     public List<Movie> getAllMovies() {
         List<Movie> allMovies = new ArrayList<>();
@@ -26,16 +32,24 @@ public class MovieController {
         Movie persistedMovie = movieDAO.findByImdbID(movie.getImdbID());
         if (persistedMovie == null) {
             movieDAO.save(movie);
-            }
-
         }
+    }
 
     public void addMovies(List<Movie> movieList) {
-        
-}
-    public Movie getMovie(String id) {
-        return movieDAO.findById(id).get();
+
     }
+
+    public void searchMoviesByTitle(String id) {
+        List<Movie> movieList = omdbService.getMovies(id);
+        for (Movie mov : movieList
+        ) {
+            Movie persistedMovie = movieDAO.findByImdbID(mov.getImdbID());
+            if (persistedMovie == null) {
+                movieDAO.save(mov);
+            }
+        }
+    }
+
 
     public void updateMovie(String id, Movie movie) {
         movieDAO.save(movie);
@@ -45,8 +59,8 @@ public class MovieController {
         movieDAO.delete(movie);
     }
 
-    public Movie getMovieByImdbID(String movieID) {
-        return movieDAO.findByImdbID(movieID);
+    public Optional<Movie> getMovieById(Long movieID) {
+        return movieDAO.findById(movieID);
     }
 
 }

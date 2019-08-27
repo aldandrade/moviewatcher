@@ -22,6 +22,7 @@ public class OmdbService {
     public List<Movie> getMovies(String movieName) {
         RestTemplate restTemplate = new RestTemplate();
         String receivedMovies =restTemplate.getForObject(URI.concat(movieName), String.class);
+        System.out.println(receivedMovies);
         return parseResponse(receivedMovies);
     }
 
