@@ -20,8 +20,12 @@ public class MovieAPI {
 
     @RequestMapping("/movies")
     public List<Movie> searchMoviesByTitle(@RequestParam(name = "title") String title) {
-        movieController.searchMoviesByTitle(title);
-        return movieController.getAllMovies();
+        return movieController.searchMoviesByTitle(title);
+    }
+
+    @RequestMapping("/movies")
+    public List<Movie> searchNextPage(@RequestParam(value = "title") String title, @RequestParam(value = "page") Integer page) {
+        return movieController.getNextPage(title, page);
     }
 
     @PostMapping("/movies/")
@@ -30,11 +34,14 @@ public class MovieAPI {
         return movieController.getAllMovies();
     }
 
-    @RequestMapping("/movies/{id}")
+    @RequestMapping("/movie/{id}")
     @ResponseBody
     public Optional<Movie> getMovieById(@PathVariable Long id) {
         return movieController.getMovieById(id);
     }
 
-
+    @RequestMapping("/movies/count")
+    public Integer getResponseCount(@RequestParam(name = "title") String title) {
+        return movieController.getMovieCount(title);
+    }
 }

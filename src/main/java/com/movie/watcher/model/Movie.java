@@ -19,8 +19,6 @@ public class Movie {
     @NotBlank
     private String Type;
     private String Poster;
-    @OneToMany(mappedBy = "movieId", cascade = CascadeType.ALL)
-    private Set<User> users;
     private boolean isFavorite;
 
 
@@ -28,7 +26,7 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(Long id, String imdbID, String Title, String Year, String type, String posterLink, User users) {
+    public Movie(Long id, String imdbID, String Title, String Year, String type, String posterLink, Boolean isFavorite) {
         super();
         this.id = id;
         this.imdbID = imdbID;
@@ -36,7 +34,7 @@ public class Movie {
         this.Year = Year;
         this.Type = type;
         this.Poster = posterLink;
-        this.users = Stream.of(users).collect(Collectors.toSet());
+        this.isFavorite = isFavorite;
     }
 
     public void setId(Long id) {
@@ -92,7 +90,7 @@ public class Movie {
     }
 
     public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
+        this.isFavorite = favorite;
     }
 }
 
