@@ -52,15 +52,14 @@ public class MovieController {
         return movieList;
     }
 
-    public int getMovieCount(String title) {
-        Integer totalMovies = omdbService.getMovieCount(title);
+    public int getMovieCount(String s) {
+        Integer totalMovies = omdbService.getMovieCount(s);
         return totalMovies;
     }
 
-    public List<Movie> getNextPage(String id, Integer page) {
+    public List<Movie> getNextPage(String id, String page) {
         List<Movie> movieList = omdbService.getNextPage(id, page);
-        for (Movie mov : movieList
-        ) {
+        for (Movie mov : movieList) {
             Movie persistedMovie = movieDAO.findByImdbID(mov.getImdbID());
             if (persistedMovie == null) {
                 movieDAO.save(mov);

@@ -19,15 +19,18 @@ public class MovieAPI {
     }
 
     @RequestMapping("/movies")
-    public List<Movie> searchMoviesByTitle(@RequestParam(name = "title") String title) {
-        return movieController.searchMoviesByTitle(title);
+    public List<Movie> searchMoviesByTitle(@RequestParam(name = "s") String s, @RequestParam( value = "page", defaultValue = "1") String page) {
+        if(page.equals("1")){
+            return  movieController.searchMoviesByTitle(s);
+        }else
+         return movieController.getNextPage(s, page);
     }
-
+    /*
     @RequestMapping("/movies")
     public List<Movie> searchNextPage(@RequestParam(value = "title") String title, @RequestParam(value = "page") Integer page) {
         return movieController.getNextPage(title, page);
     }
-
+    */
     @PostMapping("/movies/")
     public List<Movie> addMovie(@RequestBody Movie movie) {
         movieController.addMovie(movie);
@@ -41,7 +44,7 @@ public class MovieAPI {
     }
 
     @RequestMapping("/movies/count")
-    public Integer getResponseCount(@RequestParam(name = "title") String title) {
-        return movieController.getMovieCount(title);
+    public Integer getResponseCount(@RequestParam(name = "s") String s) {
+        return movieController.getMovieCount(s);
     }
 }

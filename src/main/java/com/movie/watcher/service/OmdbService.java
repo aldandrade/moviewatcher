@@ -32,11 +32,11 @@ public class OmdbService {
         return Arrays.asList(gson.fromJson(movieJsonArray.toString(), Movie[].class));
     }
 
-    public List<Movie> getNextPage(String lastSearch, Integer page) {
+    public List<Movie> getNextPage(String lastSearch, String page) {
         RestTemplate restTemplate = new RestTemplate();
         String forNextPageURI = URI.concat(lastSearch);
-        forNextPageURI.concat("&page=");
-        forNextPageURI.concat(page.toString());
+        forNextPageURI = forNextPageURI.concat("&page=");
+        forNextPageURI = forNextPageURI.concat(page.toString());
         String receivedMovies = restTemplate.getForObject(forNextPageURI, String.class);
         return parseResponse(receivedMovies);
     }
