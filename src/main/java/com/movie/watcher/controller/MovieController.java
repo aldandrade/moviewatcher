@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service("MovieController")
 public class MovieController {
-
+    @Autowired
     private final MovieDAO movieDAO;
     private final OmdbService omdbService;
 
@@ -42,30 +42,31 @@ public class MovieController {
 
     public List<Movie> searchMoviesByTitle(String id) {
         List<Movie> movieList = omdbService.getMovies(id);
-        for (Movie mov : movieList
-        ) {
-            Movie persistedMovie = movieDAO.findByImdbID(mov.getImdbID());
-            if (persistedMovie == null) {
-                movieDAO.save(mov);
-            }
-        }
-        return movieList;
+        return getMovies(movieList);
     }
 
     public int getMovieCount(String s) {
-        Integer totalMovies = omdbService.getMovieCount(s);
-        return totalMovies;
+        return omdbService.getMovieCount(s);
     }
 
     public List<Movie> getNextPage(String id, String page) {
         List<Movie> movieList = omdbService.getNextPage(id, page);
+        return getMovies(movieList);
+    }
+
+    private List<Movie> getMovies(List<Movie> movieList) {
+        List<Movie> listToReturn = new ArrayList<Movie>();
         for (Movie mov : movieList) {
             Movie persistedMovie = movieDAO.findByImdbID(mov.getImdbID());
             if (persistedMovie == null) {
                 movieDAO.save(mov);
+                persistedMovie = movieDAO.findByImdbID(mov.getImdbID());
+                listToReturn.add(persistedMovie);
+            }else{
+                listToReturn.add(persistedMovie);
             }
         }
-        return movieList;
+        return listToReturn;
     }
 
     public void updateMovie(String id, Movie movie) {
