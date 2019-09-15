@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -25,12 +24,7 @@ public class MovieAPI {
         }else
          return movieController.getNextPage(s, page);
     }
-    /*
-    @RequestMapping("/movies")
-    public List<Movie> searchNextPage(@RequestParam(value = "title") String title, @RequestParam(value = "page") Integer page) {
-        return movieController.getNextPage(title, page);
-    }
-    */
+
     @PostMapping("/movies/")
     public List<Movie> addMovie(@RequestBody Movie movie) {
         movieController.addMovie(movie);
@@ -39,12 +33,25 @@ public class MovieAPI {
 
     @RequestMapping("/movie/{id}")
     @ResponseBody
-    public Optional<Movie> getMovieById(@PathVariable Long id) {
-        return movieController.getMovieById(id);
+    public Movie getMovieById(@PathVariable String id) {
+        return movieController.getExtendedInfo(id);
+    }
+    @PutMapping(path = "/movie/{id}")
+    public Movie favoriteMovie(@PathVariable String id){
+        return movieController.favoriteMovie(id);
+    }
+    @PutMapping(path = "/movie/{id}/unfavorite")
+    public Movie unfavoriteMovie(@PathVariable String id){
+        return movieController.unfavoriteMovie(id);
     }
 
     @RequestMapping("/movies/count")
     public Integer getResponseCount(@RequestParam(name = "s") String s) {
         return movieController.getMovieCount(s);
+    }
+
+    @RequestMapping("/favorites")
+    public List<Movie> getAllFavoriteMovies(){
+        return movieController.getAllFavoriteMovies();
     }
 }

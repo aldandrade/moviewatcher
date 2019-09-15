@@ -2,9 +2,7 @@ package com.movie.watcher.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Entity
 public class Movie {
@@ -12,21 +10,109 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
-    private String imdbID; //imdbID that came from the OMDB API
+    private String imdbID;
     @NotBlank
     private String Title;
     private String Year;
     @NotBlank
     private String Type;
     private String Poster;
-    private boolean isFavorite;
+    private boolean favorite;
+    private String Rated;
+    private String Released;
+    private String Runtime;
+    private String Genre;
+    private String Director;
+    private String Actors;
+    private String Plot;
+    private String Awards;
 
+    public String getRated() {
+        return Rated;
+    }
 
+    public void setRated(String rated) {
+        Rated = rated;
+    }
+
+    public String getReleased() {
+        return Released;
+    }
+
+    public void setReleased(String released) {
+        Released = released;
+    }
+
+    public String getRuntime() {
+        return Runtime;
+    }
+
+    public void setRuntime(String runtime) {
+        Runtime = runtime;
+    }
+
+    public String getGenre() {
+        return Genre;
+    }
+
+    public void setGenre(String genre) {
+        Genre = genre;
+    }
+
+    public String getDirector() {
+        return Director;
+    }
+
+    public void setDirector(String director) {
+        Director = director;
+    }
+
+    public String getActors() {
+        return Actors;
+    }
+
+    public void setActors(String actors) {
+        Actors = actors;
+    }
+
+    public String getPlot() {
+        return Plot;
+    }
+
+    public void setPlot(String plot) {
+        Plot = plot;
+    }
+
+    public String getAwards() {
+        return Awards;
+    }
+
+    public void setAwards(String awards) {
+        Awards = awards;
+    }
 
     public Movie() {
     }
 
-    public Movie(Long id, String imdbID, String Title, String Year, String type, String posterLink, Boolean isFavorite) {
+    public Movie(Long id, @NotBlank String imdbID, @NotBlank String title, String year, @NotBlank String type, String poster, boolean favorite, String rated, String released, String runtime, String genre, String director, String actors, String plot, String awards) {
+        this.imdbID = imdbID;
+        this.id = id;
+        this.Title = title;
+        this.Year = year;
+        this.Type = type;
+        this.Poster = poster;
+        this.favorite = favorite;
+        this.Rated = rated;
+        this.Released = released;
+        this.Runtime = runtime;
+        this.Genre = genre;
+        this.Director = director;
+        this.Actors = actors;
+        this.Plot = plot;
+        this.Awards = awards;
+    }
+
+    public Movie(Long id, String imdbID, String Title, String Year, String type, String posterLink, Boolean favorite) {
         super();
         this.id = id;
         this.imdbID = imdbID;
@@ -34,7 +120,7 @@ public class Movie {
         this.Year = Year;
         this.Type = type;
         this.Poster = posterLink;
-        this.isFavorite = isFavorite;
+        this.favorite = favorite;
     }
 
     public void setId(Long id) {
@@ -77,20 +163,20 @@ public class Movie {
         this.Type = type;
     }
 
-    public String getPosterLink() {
+    public String getPoster() {
         return Poster;
     }
 
-    public void setPosterLink(String posterLink) {
-        this.Poster = posterLink;
+    public void setPoster(String poster) {
+        this.Poster = poster;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
+    public boolean getFavorite() {
+        return favorite;
     }
 
     public void setFavorite(boolean favorite) {
-        this.isFavorite = favorite;
+        this.favorite = favorite;
     }
 }
 

@@ -62,7 +62,7 @@ public class MovieController {
                 movieDAO.save(mov);
                 persistedMovie = movieDAO.findByImdbID(mov.getImdbID());
                 listToReturn.add(persistedMovie);
-            }else{
+            } else {
                 listToReturn.add(persistedMovie);
             }
         }
@@ -81,5 +81,40 @@ public class MovieController {
         return movieDAO.findById(movieID);
     }
 
+    public Movie favoriteMovie(String id) {
+        Movie movieToFavorite = movieDAO.findById(Long.parseLong(id)).orElseThrow();
+        if (movieToFavorite.getTitle() == null) {
+            return movieToFavorite;
+        } else
+            movieToFavorite.setFavorite(true);
+        movieDAO.save(movieToFavorite);
+        return movieToFavorite;
+    }
+
+    public List<Movie> getAllFavoriteMovies(){
+        return movieDAO.findAllByFavoriteIsTrue();
+    }
+
+    public Movie unfavoriteMovie(String id) {
+        Movie movieToFavorite = movieDAO.findById(Long.parseLong(id)).orElseThrow();
+        if (movieToFavorite.getTitle() == null) {
+            return movieToFavorite;
+        } else
+            movieToFavorite.setFavorite(false);
+        movieDAO.save(movieToFavorite);
+        return movieToFavorite;
+    }
+
+    public Movie getExtendedInfo(String id){
+        Movie mov = movieDAO.findById(Long.parseLong(id)).orElseThrow();
+        Movie extendedMov = omdbService.getExtendedInfo(mov.getImdbID());
+        if (mov.getGenre() == null) {
+            extendedMov.setId(mov.getId());
+            movieDAO.save(extendedMov);
+            return extendedMov;
+        } else
+            extendedMov = movieDAO.findById(Long.parseLong(id)).orElseThrow();
+            return extendedMov;
+    }
 }
 

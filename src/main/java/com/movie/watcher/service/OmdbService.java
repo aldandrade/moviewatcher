@@ -11,6 +11,8 @@ public class OmdbService {
     private static final Gson gson = new Gson();
     private static final JsonParser jsonParser = new JsonParser();
     private final static String URI = "http://www.omdbapi.com/?apikey=22e6d02f&s=";
+    private final static String URIEXTENDED = "http://www.omdbapi.com/?apikey=22e6d02f&i=";
+    private final static String filterForMovies = "&type=movie";
 
     /**
      * This method will return a list of movies that contains the movieName passed as input
@@ -19,7 +21,8 @@ public class OmdbService {
      */
     public List<Movie> getMovies(String movieName) {
         RestTemplate restTemplate = new RestTemplate();
-        String receivedMovies = restTemplate.getForObject(URI.concat(movieName), String.class);
+        String uriToSend = URI.concat(movieName) + filterForMovies;
+        String receivedMovies = restTemplate.getForObject(uriToSend, String.class);
         return parseResponse(receivedMovies);
     }
 
@@ -31,7 +34,7 @@ public class OmdbService {
         }catch (NullPointerException npe){
             noMovieFound = "Some movie found";
         }
-        if (noMovieFound.equals("Movie not found!")) {
+        if (noMovieFound.equals("Movie not found!") || noMovieFound.equals("Too many results.") ) {
             List<Movie> emptyList = new ArrayList<Movie>();
             return emptyList;
         } else {
@@ -43,8 +46,7 @@ public class OmdbService {
     public List<Movie> getNextPage(String lastSearch, String page) {
         RestTemplate restTemplate = new RestTemplate();
         String forNextPageURI = URI.concat(lastSearch);
-        forNextPageURI = forNextPageURI.concat("&page=");
-        forNextPageURI = forNextPageURI.concat(page);
+        forNextPageURI = forNextPageURI.concat("&page=") + page + filterForMovies;
         String receivedMovies = restTemplate.getForObject(forNextPageURI, String.class);
         return parseResponse(receivedMovies);
     }
@@ -60,6 +62,14 @@ public class OmdbService {
             return totalResults;
         }
         return jsonObject.get("totalResults").getAsInt();
+    }
+
+    public Movie getExtendedInfo(String imdbId){
+        RestTemplate restTemplate = new RestTemplate();
+        String uriToSend = URIEXTENDED.concat(imdbId);
+        String receivedMovie = restTemplate.getForObject(uriToSend, String.class);
+        JsonObject jsonObject = jsonParser.parse(receivedMovie).getAsJsonObject();
+        return gson.fromJson(jsonObject .toString(), Movie.class);
     }
 }
 
