@@ -1,0 +1,27 @@
+.navbar {
+  position: relative;
+  justify-content: space-between;
+}
+button{
+  margin-right: 1rem;
+}
+button:hover{
+  background-color: purple;
+}
+span{
+  padding: 1rem;
+  padding-block-end: 1rem;
+}
+.homeButton {
+  background-color: gold;
+  border-radius: 2.5px;
+  padding: 2.2px;
+  width: fit-content;
+  height: fit-content;
+}
+a:link {
+  text-decoration: none;
+}
+a{
+
+}

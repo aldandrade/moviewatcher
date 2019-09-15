@@ -1,0 +1,71 @@
+.mat-list{
+  padding: 1% 33%;
+  align-content: center;
+}
+.movieStuff{
+  font-size-adjust: inherit;
+  font-size: medium;
+}
+.item{
+  border: 2px solid blueviolet;
+  border-radius: 2px;
+  padding: 10em;
+  margin: .5em;
+  border-radius: 3px;
+  padding: 400em;
+  width: auto;
+  height: auto;
+  min-width: 80ch;
+  min-height: 5ch;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+.poster{
+  max-width: 33%;
+  max-height: 40%;
+  align-content: center;
+  padding: 1% 33%;
+}
+.span{
+  width: fit-content;
+}
+.mat-card-header{
+  width: 33%;
+  padding: 0% 33%;
+}
+
+h2{
+  font-size: 2.4em;
+}
+
+p{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.2em;
+  padding: 0% 33%;
+}
+
+.mat-raised-button{
+  width: fit-content;
+  max-width: fit-content;
+  padding: 0% 23% 0% 23%;
+  background-color: black;
+  align-self: center;
+  color: aliceblue;
+}
+
+#favoriteButton{
+  background-color: black;
+  color: white;
+}
+
+#unfavoriteButton{
+  background-color: gold;
+  color: black;
+}
+button:active{
+ background-color: gold;
+}
+
+button:hover{
+  background-color: crimson;
+ }

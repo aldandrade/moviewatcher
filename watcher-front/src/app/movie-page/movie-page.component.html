@@ -1,0 +1,62 @@
+<!--
+<mat-card class="movie-card mat-elevation-z10">
+  <div>
+    <mat-card-header>
+        <mat-card-title fxLayout.xs="column" > <h2 fxFlexFill>{{movie.title}}</h2></mat-card-title>
+    </mat-card-header>
+    <div fxFlexFill fxLayout.xs="column" fxLayout="row">
+          <img mat-card-image class = "poster"  [src]="movie.posterLink" alt="{{movie.title}}">
+  </div>
+    <mat-card-content>
+        <mat-list class="movieInfo">
+          <mat-list-item>Title: {{movie.title}}</mat-list-item>
+          <mat-list-item>Release date: {{movie.year}}</mat-list-item>
+          <mat-list-item>IMDB Id: {{movie.imdbID}}</mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button id="favoriteButton" class="mat-raised-button" (click)="favoriteMovie(movie.id)">
+            Favorite
+          </button>
+    </mat-card-actions>
+</div>
+</mat-card>
+-->
+<mat-card fxFlexFill fxLayout.xs="column" fxLayout="column" class="movie-card mat-elevation-z10">
+    <mat-card-header>
+        <mat-card-title fxLayout.xs="column" > {{movie.title}}</mat-card-title>
+    </mat-card-header>
+   <ng-container *ngIf="moviePoster ; then thenTemplate; else elseTemplate">
+      <ng-template #thenTemplate>
+          <img mat-card-image class = "poster"  [src]="moviePoster" alt="{{movie.title}}">
+      </ng-template>
+      <ng-template #elseTemplate>
+          <img mat-card-image class = "poster"  src="../../assets/no_poster.jpg" alt="No poster image">
+      </ng-template>
+  </ng-container>
+    <mat-card-content>
+      <mat-list fxLayout.xs="column" class="movieStuff">
+        <mat-list-item class = "item">{{movie.genre}}</mat-list-item>
+        <mat-list-item  class = "item">{{movie.runtime}}</mat-list-item>
+        <mat-list-item class = "item">{{movie.actors}}</mat-list-item>
+        <mat-list-item class = "item">{{movie.director}}</mat-list-item>
+        <mat-list-item class = "item">{{movie.released}}</mat-list-item>
+        <mat-list-item class = "item">{{movie.rated}}</mat-list-item>
+        <mat-list-item class = "item">{{movie.awards}}</mat-list-item>
+        <mat-list-item class = "item">{{movie.plot}}</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions class="movie-actions">
+        <ng-container *ngIf="movie.favorite; else elseTemplate">
+          <button mat-button id="unfavoriteButton" class="mat-raised-button" (click)="unfavoriteMovie(movie)">
+            Unfavorite
+          </button>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <button mat-button id="favoriteButton" class="mat-raised-button" (click)="favoriteMovie(movie)">
+            Favorite
+          </button>
+        </ng-template>
+    </mat-card-actions>
+</mat-card>
+<router-outlet></router-outlet>

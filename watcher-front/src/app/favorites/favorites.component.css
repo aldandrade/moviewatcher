@@ -1,0 +1,56 @@
+.gridDiv{
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+}
+.poster{
+ padding: 2px;
+ height: 60%;
+}
+.mat-display-2 h2
+{
+ background-color :#9947eb;
+ background-size: 33%;
+ padding: 12px;
+ display: block;
+ border: 2px solid;
+ width: 33%;
+ min-width:33%;
+ position: relative;
+ top: 20%;
+ left: 33%;
+ text-align: center;
+ align-content: center;
+
+}
+
+.searchClass {
+  display: flex;
+  flex-direction: column;
+ }
+.searchBar
+{
+  background-color: #e6ccff;
+  width: auto;
+  position: relative;
+  padding: 0% 18%;
+}
+
+.mat-card {
+  flex: 0 1 calc(20% - 8px);
+  height: max-content;
+  width: 320px;
+  margin-bottom: 3%;
+}
+#unfavoriteButton{
+  background-color: gold;
+  color: black;
+}
+button:active{
+ background-color: gold;
+}
+
+button:hover{
+  background-color: crimson;
+ }
+
